@@ -4,6 +4,15 @@ package warmup2
 // Given an slice of ints, return true if the sequence of numbers 1, 2, 3
 // appears in the slice somewhere.
 func Array123(s []int) bool {
+	for i, _ := range s {
+		if s[i] == 1 {
+			if i+1 < len(s) && s[i+1] == 2 {
+				if i+2 < len(s) && s[i+2] == 3 {
+					return true
+				}
+			}
+		}
+	}
 	return false
 }
 
