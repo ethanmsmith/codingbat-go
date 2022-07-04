@@ -102,8 +102,6 @@ func FrontBack(s string) string {
 	}
 	tmp := string(s[0])
 	return string(s[len(s)-1]) + string(s[1:len(s)-1]) + tmp
-	// return tmp
-
 }
 
 // Given a string, we'll say that the front is the first 3 chars of the string. If the string
