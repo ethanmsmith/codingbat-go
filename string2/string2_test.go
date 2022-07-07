@@ -34,6 +34,7 @@ func TestCountCode(t *testing.T) {
 		{"cozexxcope", 2},
 		{"cozfxxcope", 1},
 		{"xxcozeyycop", 1},
+		{"cozfxxco3e", 0},
 		{"cozcop", 0},
 		{"abcxyz", 0},
 		{"code", 1},
