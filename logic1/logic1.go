@@ -5,7 +5,7 @@ package logic1
 // Unless it is the weekend, in which case there is no upper bound on the number
 // of cigars. Return true if the party with the given values is successful, or false otherwise.
 func CigarParty(cigars int, weekend bool) bool {
-	return true
+	return cigars >= 40 && ((!weekend && cigars <= 60) || weekend)
 }
 
 // You are driving a little too fast, and a police officer stops you. Write code
@@ -14,13 +14,25 @@ func CigarParty(cigars int, weekend bool) bool {
 // the result is 1. If speed is 81 or more, the result is 2. Unless it is your
 // birthday -- on that day, your speed can be 5 higher in all cases.
 func CaughtSpeeding(speed int, isBirthday bool) int {
-	return 0
+	ticketSize := 0
+	realSpeed := speed
+	if isBirthday {
+		realSpeed = realSpeed - 5
+	}
+	if realSpeed < 60 {
+		ticketSize = 0
+	} else if realSpeed > 60 && realSpeed <= 80 {
+		ticketSize = 1
+	} else if realSpeed > 80 {
+		ticketSize = 2
+	}
+	return ticketSize
 }
 
 // The number 6 is a truly great number. Given two int values, a and b, return true
 // if either one is 6. Or if their sum or difference is 6.
 func Love6(a, b int) bool {
-	return false
+	return a == 6 || b == 6 || a+b == 6 || a-b == 6 || b-a == 6
 }
 
 // You and your date are trying to get a table at a restaurant. The parameter "you"
@@ -29,21 +41,34 @@ func Love6(a, b int) bool {
 // with 0=no, 1=maybe, 2=yes. If either of you is very stylish, 8 or more, then the
 // result is 2 (yes). With the exception that if either of you has style of 2 or less,
 // then the result is 0 (no). Otherwise the result is 1 (maybe).
+//swithcing to yoda expressions
 func DateFashion(you, date int) int {
-	return 0
+	if 2 >= you || 2 >= date {
+		return 0
+	}
+	if 8 <= you || 8 <= date {
+		return 2
+	}
+	return 1
 }
 
 // Given 2 ints, a and b, return their sum. However, sums in the range 10..19 inclusive,
 // are forbidden, so in that case just return 20.
 func SortaSum(a, b int) int {
-	return 0
+	if a+b >= 10 && a+b <= 19 {
+		return 20
+	}
+	return a + b
 }
 
 // Given a number n, return true if n is in the range 1..10, inclusive. Unless
 // "outsideMode" is true, in which case return true if the number is less or equal
 // to 1, or greater or equal to 10.
 func In1To10(n int, outsideMode bool) bool {
-	return false
+	if outsideMode {
+		return 1 >= n || 10 <= n
+	}
+	return 1 <= n && 10 >= n
 }
 
 // The squirrels in Palo Alto spend most of the day playing. In particular, they
@@ -51,7 +76,13 @@ func In1To10(n int, outsideMode bool) bool {
 // then the upper limit is 100 instead of 90. Given an int temperature and a boolean
 // isSummer, return true if the squirrels play and false otherwise.
 func SquirrelPlay(temp int, isSummer bool) bool {
-	return false
+	var upperLimit int
+	if isSummer {
+		upperLimit = 100
+	} else {
+		upperLimit = 90
+	}
+	return 60 <= temp && temp <= upperLimit
 }
 
 // Given a day of the week encoded as 0=Sun, 1=Mon, 2=Tue, ...6=Sat, and a boolean
@@ -60,12 +91,20 @@ func SquirrelPlay(temp int, isSummer bool) bool {
 // weekend it should be "10:00". Unless we are on vacation -- then on weekdays it
 // should be "10:00" and weekends it should be "off".
 func AlarmClock(day int, isVacation bool) string {
-	return ""
+	alarm := "10:00"
+	if isVacation && (day == 6 || day == 0) {
+		alarm = "off"
+	}
+	if 0 < day && day < 6 && !isVacation {
+		alarm = "7:00"
+	}
+	return alarm
 }
 
 // Given a non-negative number "num", return true if num is within 2 of a multiple of 10.
 // Note: (a % b) is the remainder of dividing a by b, so (7 % 5), is 2. See also:
 // Introduction to Mod (http://codingbat.com/doc/practice/mod-introduction.html)
 func NearTen(num int) bool {
-	return false
+	mod := num % 10
+	return mod <= 2 || mod >= 8
 }
